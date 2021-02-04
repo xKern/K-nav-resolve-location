@@ -30,11 +30,13 @@ class GoogleMap:
         self.__validate__()
 
     def __validate__(self):
-        if self.response['status'] != 'OK':
-            pass
-            self.error = self.response['error_message']
-        else:
+        status = self.response['status']
+        if status == 'OK':
             self.results = self.response['results']
+        elif status == 'ZERO_RESULTS':
+            self.error = 'zero results'
+        else:
+            self.error = self.response['error_message']
 
     def is_okay(self):
         return False if self.error else True
